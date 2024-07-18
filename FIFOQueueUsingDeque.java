@@ -1,52 +1,41 @@
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
-public class DequeueFriendlyFIFOQueueUsingStacks<T> {
-    private Stack<T> stack1;
-    private Stack<T> stack2;
+public class FIFOQueueUsingDeque<T> {
+    private Deque<T> deque;
 
-    public DequeueFriendlyFIFOQueueUsingStacks() {
-        stack1 = new Stack<>();
-        stack2 = new Stack<>();
+    public FIFOQueueUsingDeque() {
+        deque = new ArrayDeque<>();
     }
 
     public void enqueue(T element) {
-        stack1.push(element);
+        deque.addLast(element);
     }
 
     public T dequeue() {
         if (isEmpty()) {
             throw new IllegalStateException("Queue is empty");
         }
-        if (stack2.isEmpty()) {
-            while (!stack1.isEmpty()) {
-                stack2.push(stack1.pop());
-            }
-        }
-        return stack2.pop();
+        return deque.removeFirst();
     }
 
     public T peek() {
         if (isEmpty()) {
             throw new IllegalStateException("Queue is empty");
         }
-        if (stack2.isEmpty()) {
-            while (!stack1.isEmpty()) {
-                stack2.push(stack1.pop());
-            }
-        }
-        return stack2.peek();
+        return deque.peekFirst();
     }
 
     public boolean isEmpty() {
-        return stack1.isEmpty() && stack2.isEmpty();
+        return deque.isEmpty();
     }
 
     public int size() {
-        return stack1.size() + stack2.size();
+        return deque.size();
     }
 
     public static void main(String[] args) {
-        DequeueFriendlyFIFOQueueUsingStacks<Integer> queue = new DequeueFriendlyFIFOQueueUsingStacks<>();
+        FIFOQueueUsingDeque<Integer> queue = new FIFOQueueUsingDeque<>();
         queue.enqueue(1);
         queue.enqueue(2);
         queue.enqueue(3);
